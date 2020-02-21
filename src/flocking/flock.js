@@ -7,12 +7,12 @@ import Cohesion from "./cohesion";
 import Alignment from "./cohesion";
 import Separation from "./separation";
 
-export default function Flocking(flock, boid) {
-  const alignment = Alignment(flock, boid);
+export default function Flocking(flock, boid, ind) {
+  const alignment = Alignment(flock, boid, ind);
   const cohesion = Cohesion(flock, boid);
   const separation = Separation(flock, boid);
-  boid.accx += alignment.x;
-  boid.accy += alignment.y;
+  boid.accx += alignment[0];
+  boid.accy += alignment[1];
   boid.accx += cohesion.x;
   boid.accy += cohesion.y;
   boid.accx += separation.x;

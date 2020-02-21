@@ -74,11 +74,11 @@ function App() {
   // animation loop
   useAnimationFrame(dt => {
     setFlock(ps => {
-      return ps.map(boid => {
+      return ps.map((boid, ind) => {
         // handle edge detection
         boid = Edges(boid, width, height);
         // simulate flocking behaviors so we can mutate position appropriately.
-        boid = Flocking(ps, boid);
+        boid = Flocking(ps, boid, ind);
         // increment position by velocity
         boid.posx += boid.velx;
         boid.posy += boid.vely;
