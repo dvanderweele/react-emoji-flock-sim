@@ -18,14 +18,14 @@ export default function Cohesion(flock, boid, ind) {
     steering = steering.map(x => x / numPeers);
     steering[0] -= boid.posx;
     steering[1] -= boid.posx;
-    // set magnitude of steering vector to 4
+    // set magnitude of steering vector to 5
     let stmag = Math.sqrt(
       steering[0] * steering[0] + steering[1] * steering[1]
     );
-    steering /= stmag;
-    steering /= stmag;
-    steering *= 4;
-    steering *= 4;
+    steering[0] /= stmag;
+    steering[1] /= stmag;
+    steering[0] *= 5;
+    steering[1] *= 5;
     // subtract velocity vector from steering vector
     steering[0] -= boid.velx;
     steering[1] -= boid.vely;

@@ -17,14 +17,14 @@ export default function Alignment(flock, boid, ind) {
   if (numPeers > 0) {
     // divide steering vector by numPeers
     steering = steering.map(x => x / numPeers);
-    // set magnitude of steering vector to 4
+    // set magnitude of steering vector to 7
     let stmag = Math.sqrt(
       steering[0] * steering[0] + steering[1] * steering[1]
     );
-    steering /= stmag;
-    steering /= stmag;
-    steering *= 4;
-    steering *= 4;
+    steering[0] /= stmag;
+    steering[1] /= stmag;
+    steering[0] *= 7;
+    steering[1] *= 7;
     // subtract velocity vector from steering vector
     steering[0] -= boid.velx;
     steering[1] -= boid.vely;

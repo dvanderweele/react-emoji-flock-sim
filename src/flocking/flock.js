@@ -7,15 +7,18 @@ import Cohesion from "./cohesion";
 import Alignment from "./cohesion";
 import Separation from "./separation";
 
-export default function Flocking(flock, boid, ind) {
-  const alignment = Alignment(flock, boid, ind);
-  const cohesion = Cohesion(flock, boid, ind);
-  const separation = Separation(flock, boid, ind);
+export default function Flocking(flock, boid, ind, a, c, s) {
+  let alignment = Alignment(flock, boid, ind);
+  let cohesion = Cohesion(flock, boid, ind);
+  let separation = Separation(flock, boid, ind);
+  alignment = alignment.map(x => x * a);
+  cohesion = cohesion.map(x => x * c);
+  separation = separation.map(x => x * s);
   boid.accx += alignment[0];
   boid.accy += alignment[1];
-  boid.accx += cohesion.x;
-  boid.accy += cohesion.y;
-  boid.accx += separation.x;
-  boid.accx += separation.y;
+  boid.accx += cohesion[0];
+  boid.accy += cohesion[1];
+  boid.accx += separation[0];
+  boid.accx += separation[1];
   return boid;
 }
