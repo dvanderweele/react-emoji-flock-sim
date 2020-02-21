@@ -11,12 +11,12 @@ export default function Alignment(flock, boid, ind) {
     if (ind !== idx && d < perceptionRadius) {
       steering[0] += other.velx;
       steering[1] += other.vely;
-      total++;
+      numPeers++;
     }
   });
-  if (total > 0) {
-    // divide steering vector by total
-    steering = steering.map(x => x / total);
+  if (numPeers > 0) {
+    // divide steering vector by numPeers
+    steering = steering.map(x => x / numPeers);
     // set magnitude of steering vector to 4
     let stmag = Math.sqrt(
       steering[0] * steering[0] + steering[1] * steering[1]

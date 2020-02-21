@@ -9,8 +9,8 @@ import Separation from "./separation";
 
 export default function Flocking(flock, boid, ind) {
   const alignment = Alignment(flock, boid, ind);
-  const cohesion = Cohesion(flock, boid);
-  const separation = Separation(flock, boid);
+  const cohesion = Cohesion(flock, boid, ind);
+  const separation = Separation(flock, boid, ind);
   boid.accx += alignment[0];
   boid.accy += alignment[1];
   boid.accx += cohesion.x;
