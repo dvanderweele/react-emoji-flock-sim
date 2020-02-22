@@ -1,6 +1,6 @@
 {
-  "name": "spring-flocking-sandbox",
-  "version": "0.1.0",
+  "name": "react-emoji-flock-component",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
