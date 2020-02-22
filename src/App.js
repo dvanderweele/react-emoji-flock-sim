@@ -8,9 +8,9 @@ import Flocking from "./flocking/flock";
 // const emojis = ["🎨", "🐧", "🌐", "💾", "🖱", "⌨"];
 // const emojis = ["😂", "🤬", "😯", "😭", "❤", "🤙"];
 // const emojis = ["✒", "🎓", "🎙", "🏛", "💬", "📜"];
-const emojis = ["🎤", "🎧", "🎼", "🎶", "🎹", "🎸"];
+// const emojis = ["🎤", "🎧", "🎼", "🎶", "🎹", "🎸"];
 // const emojis = ["👔","🧰","👷","🚚","🛠","🧱"];
-// const emojis = ["🛡", "⚔", "🔫", "🎮", "🕹", "🎫"];
+const emojis = ["🛡", "⚔", "🔫", "🎮", "🕹", "🎫"];
 // const emojis = [️"🍩","🍪","☕","🍵","😊","📖"];
 
 const width =
@@ -54,12 +54,11 @@ function App() {
       const posy =
         Math.random() > 0.5 ? ycoord + Math.random() : ycoord - Math.random();
       // set random x and y start velocities as well
-      const velx = Math.random() > 0.5 ? Math.random() * 5 : Math.random() * -5;
-      const vely = Math.random() > 0.5 ? Math.random() * 5 : Math.random() * -5;
+      const velx = Math.random() > 0.5 ? Math.random() * 3 : Math.random() * -3;
+      const vely = Math.random() > 0.5 ? Math.random() * 3 : Math.random() * -3;
       // set x and y accel vals to 0 at start
       const accx = 0;
       const accy = 0;
-      console.log(posx, posy, velx, vely, accx, accy);
       return {
         emoji: el[0],
         groupnum: el[1],
@@ -71,30 +70,8 @@ function App() {
         accy
       };
     });
-    console.log(newFlock);
     return newFlock;
   });
-
-  const [alignval, setAlignval] = useState(1);
-  const [cohesionval, setCohesionval] = useState(1);
-  const [separationval, setSeparationval] = useState(1);
-
-  const handleSlider = e => {
-    const { name, value } = e.target;
-    switch (name) {
-      case "align":
-        setAlignval(value);
-        break;
-      case "cohesion":
-        setCohesionval(value);
-        break;
-      case "separation":
-        setSeparationval(value);
-        break;
-      default:
-        return undefined;
-    }
-  };
 
   // animation loop
   useAnimationFrame(dt => {
@@ -104,25 +81,25 @@ function App() {
           // handle edge detection
           boid = Edges(boid, width, height);
           // simulate flocking behaviors so we can mutate position appropriately.
-          boid = Flocking(ps, boid, ind, alignval, cohesionval, separationval);
-          // increment position by velocity
-          boid.posx += boid.velx;
-          boid.posy += boid.vely;
+          boid = Flocking(ps, boid, ind);
           // increment velocity by new acceleration
           boid.velx += boid.accx;
           boid.vely += boid.accx;
-          // let's limit the magnitude of the velocity vector to 8
+          // increment position by velocity
+          boid.posx += boid.velx;
+          boid.posy += boid.vely;
+          // let's limit the magnitude of the velocity vector to 6
           const velmag = Math.sqrt(
             boid.velx * boid.velx + boid.vely * boid.vely
           );
-          if (velmag > 8) {
+          if (velmag > 6) {
             boid.velx /= velmag;
             boid.vely /= velmag;
-            boid.velx *= 8;
-            boid.vely *= 8;
+            boid.velx *= 6;
+            boid.vely *= 6;
           }
           boid.accx = 0;
-          boid.accx = 0;
+          boid.accy = 0;
           return boid;
         });
         return newFlock;
@@ -133,75 +110,31 @@ function App() {
   });
 
   return (
-    <>
-      <div
-        className="App"
-        aria-hidden="true"
-        style={{
-          position: "relative",
-          width: "100vw",
-          height: "100vh",
-          backgroundColor: "ivory",
-          overflow: "hidden"
-        }}
-      >
-        {flock &&
-          flock.map((x, y) => {
-            return (
-              <Boid
-                key={y}
-                emoji={x.emoji}
-                posx={x.posx}
-                posy={x.posy}
-                velx={x.velx}
-                vely={x.vely}
-              />
-            );
-          })}
-      </div>
-      <div
-        className="sliders"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          width: "80vw",
-          marginLeft: "10vw",
-          marginRight: "10vw"
-        }}
-      >
-        <p>Alignment</p>
-        <input
-          type="range"
-          name="align"
-          min={0}
-          max={2}
-          value={alignval}
-          step={0.1}
-          onChange={e => handleSlider(e)}
-        />
-        <p>Cohesion</p>
-        <input
-          type="range"
-          name="cohesion"
-          min={0}
-          max={2}
-          value={cohesionval}
-          step={0.1}
-          onChange={e => handleSlider(e)}
-        />
-        <p>Separation</p>
-        <input
-          type="range"
-          name="separation"
-          min={0}
-          max={2}
-          value={separationval}
-          step={0.1}
-          onChange={e => handleSlider(e)}
-        />
-      </div>
-    </>
+    <div
+      className="App"
+      aria-hidden="true"
+      style={{
+        position: "relative",
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "ivory",
+        overflow: "hidden"
+      }}
+    >
+      {flock &&
+        flock.map((x, y) => {
+          return (
+            <Boid
+              key={y}
+              emoji={x.emoji}
+              posx={x.posx}
+              posy={x.posy}
+              velx={x.velx}
+              vely={x.vely}
+            />
+          );
+        })}
+    </div>
   );
 }
 

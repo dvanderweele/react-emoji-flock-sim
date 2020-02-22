@@ -22,18 +22,18 @@ export default function Separation(flock, boid, ind) {
   if (numPeers > 0) {
     // divide steering vector by numPeers
     steering = steering.map(x => x / numPeers);
-    // set magnitude of steering vector to 5
+    // set magnitude of steering vector to 3
     let stmag = Math.sqrt(
       steering[0] * steering[0] + steering[1] * steering[1]
     );
     steering[0] /= stmag;
     steering[1] /= stmag;
-    steering[0] *= 5;
-    steering[1] *= 5;
+    steering[0] *= 6;
+    steering[1] *= 6;
     // subtract velocity vector from steering vector
     steering[0] -= boid.velx;
     steering[1] -= boid.vely;
-    // limit steering vector magnitude to maxforce of1
+    // limit steering vector magnitude to maxforce of 1
     stmag = Math.sqrt(steering[0] * steering[0] + steering[1] * steering[1]);
     if (stmag > 1) {
       steering[0] /= stmag;
